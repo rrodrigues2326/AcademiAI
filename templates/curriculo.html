@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AcademiAI | Otimizar Currículo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Otimização de Currículo</h1>
+        <form action="/enviar_curriculo" method="POST" enctype="multipart/form-data">
+            <input type="text" name="nome" placeholder="Teu nome completo" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+            <input type="email" name="email" placeholder="Teu e-mail" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+            <textarea name="objetivo" placeholder="Qual a tua área profissional ou objetivo?" style="width: 100%; padding: 10px; margin: 10px 0; height: 100px;"></textarea><br>
+            
+            <label style="display:block; margin-top:10px;">Carregar o teu currículo (Word/PDF):</label>
+            <input type="file" name="ficheiro" required style="margin: 10px 0;"><br>
+            
+            <button type="submit" class="botao">Enviar Currículo</button>
+        </form>
+    </div>
+</body>
+</html>
