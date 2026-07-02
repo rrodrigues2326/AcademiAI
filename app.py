@@ -45,11 +45,14 @@ def enviar():
     msg.body = f"Nome: {nome}\nEmail: {email}\nPedido: {pedido}"
     
     if ficheiro and ficheiro.filename:
-        # Anexa ao e-mail
-        msg.attach(ficheiro.filename, ficheiro.content_type, ficheiro.read())
-        # Volta ao início do ficheiro para poder guardar no disco
-        ficheiro.seek(0)
-        ficheiro.save(os.path.join(app.config['UPLOAD_FOLDER'], ficheiro.filename))
+        # Guarda primeiro no disco
+        caminho_completo = os.path.join(app.config['UPLOAD_FOLDER'], ficheiro.filename)
+        ficheiro.save(caminho_completo)
+        
+        # Agora lê o ficheiro que acabou de ser guardado para anexar
+        with open(caminho_completo, "rb") as f:
+            conteudo = f.read()
+            msg.attach(ficheiro.filename, ficheiro.content_type, conteudo)
     
     mail.send(msg)
     return "Pedido de formatação recebido com sucesso e ficheiro enviado!"
@@ -65,11 +68,14 @@ def enviar_curriculo():
     msg.body = f"Nome: {nome}\nEmail: {email}\nObjetivo: {objetivo}"
     
     if ficheiro and ficheiro.filename:
-        # Anexa ao e-mail
-        msg.attach(ficheiro.filename, ficheiro.content_type, ficheiro.read())
-        # Volta ao início do ficheiro para poder guardar no disco
-        ficheiro.seek(0)
-        ficheiro.save(os.path.join(app.config['UPLOAD_FOLDER'], ficheiro.filename))
+        # Guarda primeiro no disco
+        caminho_completo = os.path.join(app.config['UPLOAD_FOLDER'], ficheiro.filename)
+        ficheiro.save(caminho_completo)
+        
+        # Agora lê o ficheiro que acabou de ser guardado para anexar
+        with open(caminho_completo, "rb") as f:
+            conteudo = f.read()
+            msg.attach(ficheiro.filename, ficheiro.content_type, conteudo)
     
     mail.send(msg)
     return "Pedido de currículo recebido com sucesso e ficheiro enviado!"
