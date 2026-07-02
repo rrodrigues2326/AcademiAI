@@ -14,6 +14,15 @@ app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(app)
 
+# --- DEFINIÇÃO DA PASTA DE UPLOADS SEGURA ---
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Cria a pasta se não existir logo ao iniciar
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+# --------------------------------------------
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -31,37 +40,34 @@ def enviar():
     nome = request.form['nome']
     email = request.form['email']
     pedido = request.form['pedido']
-    ficheiro = request.files['ficheiro'] # Apanha o ficheiro do formulário
+    ficheiro = request.files['ficheiro']
     
-    if ficheiro:
-        # Guarda o ficheiro na pasta 'uploads'
-        ficheiro.save(os.path.join('uploads', ficheiro.filename))
+    if ficheiro and ficheiro.filename:
+        # Usa o caminho definido na configuração
+        ficheiro.save(os.path.join(app.config['UPLOAD_FOLDER'], ficheiro.filename))
     
     msg = Message("Novo Pedido de Formatação", sender='noreply@academiai.com', recipients=['o_teu_email@email.com'])
     msg.body = f"Nome: {nome}\nEmail: {email}\nPedido: {pedido}"
     mail.send(msg)
     
-    return "Pedido de formatação recebido com sucesso e ficheiro guardado!"
+    return "Pedido de formatação recebido com sucesso!"
 
 @app.route('/enviar_curriculo', methods=['POST'])
 def enviar_curriculo():
     nome = request.form['nome']
     email = request.form['email']
     objetivo = request.form['objetivo']
-    ficheiro = request.files['ficheiro'] # Apanha o ficheiro do formulário
+    ficheiro = request.files['ficheiro']
     
-    if ficheiro:
-        # Guarda o ficheiro na pasta 'uploads'
-        ficheiro.save(os.path.join('uploads', ficheiro.filename))
+    if ficheiro and ficheiro.filename:
+        # Usa o caminho definido na configuração
+        ficheiro.save(os.path.join(app.config['UPLOAD_FOLDER'], ficheiro.filename))
     
     msg = Message("Novo Pedido de Currículo", sender='noreply@academiai.com', recipients=['o_teu_email@email.com'])
     msg.body = f"Nome: {nome}\nEmail: {email}\nObjetivo: {objetivo}"
     mail.send(msg)
     
-    return "Pedido de currículo recebido com sucesso e ficheiro guardado!"
+    return "Pedido de currículo recebido com sucesso!"
 
 if __name__ == '__main__':
-    # Garante que a pasta uploads existe
-    if not os.path.exists('uploads'):
-        os.makedirs('uploads')
     app.run(debug=True)
