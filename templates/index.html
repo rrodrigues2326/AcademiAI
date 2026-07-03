@@ -11,6 +11,7 @@
         <p>Formatação e Otimização Académica</p>
 
         <form action="/enviar" method="POST" enctype="multipart/form-data">
+            <!-- Campo Anti-spam -->
             <input type="text" name="website" style="display:none;" tabindex="-1">
             
             <input type="text" name="nome" placeholder="Nome Completo" required>
@@ -24,11 +25,18 @@
             <textarea name="pedido" placeholder="Detalhes do pedido"></textarea>
             <input type="file" name="ficheiro" required>
             
-            <input type="checkbox" id="termos" name="termos" required>
-            <label for="termos">Li e aceito os termos.</label>
+            <div style="margin-top: 10px;">
+                <input type="checkbox" id="termos" name="termos" required>
+                <label for="termos">Li e aceito os <a href="/termos" target="_blank">Termos e Condições</a>.</label>
+            </div>
             
             <button type="submit">Enviar Pedido</button>
         </form>
+
+        <!-- Links extras -->
+        <div style="margin-top: 20px; text-align: center;">
+            <p><a href="/faq">Dúvidas Frequentes (FAQ)</a></p>
+        </div>
     </div>
 </body>
 </html>

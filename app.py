@@ -4,7 +4,7 @@ from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
-# Configuração do e-mail
+# Configuração do e-mail (Mailtrap)
 app.config['MAIL_SERVER'] = 'sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
 app.config['MAIL_USERNAME'] = '963cd577c7883b'
@@ -14,7 +14,6 @@ app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(app)
 
-# Configuração de pasta
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -25,9 +24,16 @@ if not os.path.exists(UPLOAD_FOLDER):
 def index():
     return render_template('index.html')
 
+@app.route('/termos')
+def termos():
+    return render_template('termos.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/enviar', methods=['POST'])
 def enviar():
-    # 1. Proteção Anti-Spam (Honeypot)
     if request.form.get('website'):
         return "Erro de segurança: Acesso negado.", 403
 
@@ -37,9 +43,15 @@ def enviar():
     pedido = request.form['pedido']
     ficheiro = request.files['ficheiro']
     
-    # 2. Configuração da mensagem
-    msg = Message(f"Novo Pedido: {servico}", sender='noreply@academiai.com', recipients=['o_teu_email@email.com'])
-    msg.body = f"Nome: {nome}\nEmail: {email}\nServiço: {servico}\nPedido: {pedido}"
+    # 2. Configuração das mensagens
+    # Recipient: O teu e-mail real onde queres receber os pedidos
+    recipients = [ruben.rodrigues1503@gmail.com] 
+    
+    msg = Message(f"Novo Pedido AcademiAI: {nome}", 
+                  sender='noreply@academiai.com', 
+                  recipients=recipients)
+    
+    msg.body = f"Novo cliente: {nome}\nE-mail: {email}\nServiço: {servico}\n\nPedido:\n{pedido}"
     
     # 3. Processamento do ficheiro
     if ficheiro and ficheiro.filename:
