@@ -2,34 +2,33 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>AcademiAI - Otimização Profissional</title>
+    <title>AcademiAI | Consultoria Profissional</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Bem-vindo ao AcademiAI</h1>
-        <p>Escolhe o serviço que desejas para garantires a tua excelência:</p>
-        
-        <div class="botoes-servico">
-            <a href="/estudante" class="botao">Formatação Académica</a>
-            <a href="/curriculo" class="botao">Otimizar Currículo</a>
-        </div>
+        <h1>AcademiAI</h1>
+        <p>Formatação e Otimização Académica</p>
 
-        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+        <form action="/enviar" method="POST" enctype="multipart/form-data">
+            <input type="text" name="website" style="display:none;" tabindex="-1">
+            
+            <input type="text" name="nome" placeholder="Nome Completo" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            
+            <select name="servico" required>
+                <option value="Formatação Académica">Formatação Académica</option>
+                <option value="Currículo">Otimização de Currículo</option>
+            </select>
 
-        <section class="testemunhos">
-            <h2 style="text-align: center;">O que dizem os nossos clientes</h2>
+            <textarea name="pedido" placeholder="Detalhes do pedido"></textarea>
+            <input type="file" name="ficheiro" required>
             
-            <div class="depoimento" style="background: #f9f9f9; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-                <p>"A formatação ABNT da AcademiAI salvou a minha tese. Super rápido e profissional!"</p>
-                <p><strong>- Maria S., Estudante de Direito</strong></p>
-            </div>
+            <input type="checkbox" id="termos" name="termos" required>
+            <label for="termos">Li e aceito os termos.</label>
             
-            <div class="depoimento" style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
-                <p>"O meu currículo passou a ser selecionado para entrevistas na primeira semana. Recomendo muito!"</p>
-                <p><strong>- João P., Engenharia Informática</strong></p>
-            </div>
-        </section>
+            <button type="submit">Enviar Pedido</button>
+        </form>
     </div>
 </body>
 </html>
