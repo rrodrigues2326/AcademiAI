@@ -61,7 +61,7 @@ def enviar():
         with open(caminho_completo, "rb") as f:
             msg.attach(ficheiro.filename, ficheiro.content_type, f.read())
     
-    mail.send(msg)
+    #mail.send(msg)
     return "Pedido recebido com sucesso! Entraremos em contacto brevemente."
 
 if __name__ == '__main__':
